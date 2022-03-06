@@ -27,7 +27,6 @@ colnames(dat.pwas) <- c("ID","CHR","BP","P")
 dat.pwas$tissue <- rep("Plasma",nrow(dat.pwas))
 
 dat.pwas <- dat.pwas[!(is.na(dat.pwas$P)),]
-dat.pwas$pthres <- 0.05/nrow(dat.pwas)
 
 
 library(dplyr)
@@ -44,7 +43,6 @@ dat.twas <- res[,c("ID","CHR","P0","TWAS.P","tissue")]
 colnames(dat.twas) <- c("ID","CHR","BP","P","tissue")
 
 dat.twas <- dat.twas[!(is.na(dat.twas$P)),]
-dat.twas$pthres <- 0.05/nrow(dat.twas)
 
 dat_all <- rbind(dat.pwas, dat.twas)
 
@@ -84,7 +82,6 @@ colnames(dat.pwas) <- c("ID","CHR","BP","P")
 dat.pwas$tissue <- rep("Plasma",nrow(dat.pwas))
 
 dat.pwas <- dat.pwas[!(is.na(dat.pwas$P)),]
-dat.pwas$pthres <- 0.05/nrow(dat.pwas)
 
 
 library(dplyr)
@@ -101,7 +98,6 @@ dat.twas <- res[,c("ID","CHR","P0","TWAS.P","tissue")]
 colnames(dat.twas) <- c("ID","CHR","BP","P","tissue")
 
 dat.twas <- dat.twas[!(is.na(dat.twas$P)),]
-dat.twas$pthres <- 0.05/nrow(dat.twas)
 
 dat_all <- rbind(dat.pwas, dat.twas)
 
