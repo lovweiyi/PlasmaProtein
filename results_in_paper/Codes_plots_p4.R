@@ -8,6 +8,7 @@ library(latex2exp)
 
 dat_all_disease <- read_tsv("Fig4.txt")
 
+
 My_Theme = theme(
   panel.background = element_blank(), 
   title = element_text(size = 7),
@@ -40,7 +41,7 @@ axis.set <- dat_all %>%
 ## PWAS
 
 dat <- dat_all[dat_all$tissue=="Plasma",]
-p.pwas <- unique(dat$pthres)
+p.pwas <- 3.7*10^(-5)
 
 label <- c("INHBB","ITIH1","BTN3A3","INHBA","C11orf68","B3GAT3","INHBC(7.95e-63)","SNUPN","NEO1","FASN")
 
@@ -112,7 +113,7 @@ manhplot.pwas <- ggplot(dat, aes(x = BPcum, y = -log10(P),
 ## TWAS
 
 dat <- dat_all[dat_all$tissue!="Plasma",]
-p.twas <- unique(dat$pthres)
+p.twas <- 2.12*10^(-7)
 
 m <- rep(F,nrow(dat))
 pos <- labels_df.pwas$BPcum
@@ -160,6 +161,13 @@ labels_df.twas <- labels_df.twas[order(labels_df.twas$BPcum),]
 dat <- rbind(dat[!m,],dat[m,])
 dat <- dat[dat$P>10^(-195),]
 
+set.seed(20221)
+tmp1 <- which( (dat$tissue %in% c("grey","black")) & (dat$P > p.twas) )
+tmp1 <- sample(tmp1, 50000)
+tmp2 <- which(!(dat$tissue %in% c("grey","black")))
+tmp3 <- which(dat$P <= p.twas)
+dat <- dat[c(tmp1, tmp2, tmp3),]
+  
 manhplot.twas <- ggplot(dat, aes(x = BPcum, y = -log10(P), 
                                  color = as.factor(tissue), size = -log10(P))) +
   geom_point(aes(alpha = point_alpha), size=0.8) + 
@@ -278,7 +286,7 @@ axis.set <- dat_all %>%
 ## PWAS
 
 dat <- dat_all[dat_all$tissue=="Plasma",]
-p.pwas <- unique(dat$pthres)
+p.pwas <- 3.7*10^(-5)
 
 label <- c("IL1RN","BTN3A3","INHBC")
 
@@ -340,7 +348,7 @@ manhplot.pwas <- ggplot(dat, aes(x = BPcum, y = -log10(P),
 
 
 dat <- dat_all[dat_all$tissue!="Plasma",]
-p.twas <- unique(dat$pthres)
+p.twas <- 2.12*10^(-7)
 ylim <- abs(floor(log10(min(dat$P)))) + 2 
 
 m <- rep(F,nrow(dat))
@@ -387,6 +395,14 @@ labels_df.twas <- data.frame(label=labels_df.twas$ID,
 labels_df.twas <- labels_df.twas[order(labels_df.twas$BPcum),]
 
 dat <- rbind(dat[!m,],dat[m,])
+
+set.seed(20222)
+tmp1 <- which( (dat$tissue %in% c("grey","black")) & (dat$P > p.twas) )
+tmp1 <- sample(tmp1, 50000)
+tmp2 <- which(!(dat$tissue %in% c("grey","black")))
+tmp3 <- which(dat$P <= p.twas)
+dat <- dat[c(tmp1, tmp2, tmp3),]
+
 manhplot.twas <- ggplot(dat, aes(x = BPcum, y = -log10(P), 
                                  color = as.factor(tissue), size = -log10(P))) +
   geom_point(aes(alpha = point_alpha), size=0.8) + 
@@ -466,10 +482,9 @@ p <- ggarrange(ggarrange(p1, p2,
                widths = c(0.78,0.22)
                )
 
-
 ggsave(filename=paste0("Figure4.pdf"),
        plot=p, device="pdf",
-       path="/Users/jnz/Dropbox/PWAS_manuscript/NatureGenetics/2021_12_revision4/Final_files_prepared_for_submission/Figures/",
+       path="/Users/jnz/Dropbox/PWAS_manuscript/NatureGenetics/2022_02_revision5/",
        width=180, height=120, units="mm", dpi=320)
 
 
