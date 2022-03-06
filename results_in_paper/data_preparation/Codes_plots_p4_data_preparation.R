@@ -116,6 +116,5 @@ dat_all$disease <- disease
 
 dat_all_disease <- rbind(dat_all_disease, dat_all)
 
-write_tsv(dat_all_disease, "/Users/jnz/Dropbox/PWAS_manuscript/NatureGenetics/2021_12_revision4/Final_files_prepared_for_submission/Source_data/Fig4.txt")
-
+write_tsv(dat_all_disease, "/Users/jnz/Dropbox/PWAS_manuscript/NatureGenetics/2022_02_revision5/Source_data/Source_data_Main_Figuers/Source Data Fig. 4.txt")
 
