@@ -8,6 +8,7 @@ library(latex2exp)
 
 dat_all_disease <- read_tsv("Fig4.txt")
 
+thres <- 0.05
 
 My_Theme = theme(
   panel.background = element_blank(), 
@@ -113,7 +114,7 @@ manhplot.pwas <- ggplot(dat, aes(x = BPcum, y = -log10(P),
 ## TWAS
 
 dat <- dat_all[dat_all$tissue!="Plasma",]
-p.twas <- 2.12*10^(-7)
+p.twas <- 2.1*10^(-7)
 
 m <- rep(F,nrow(dat))
 pos <- labels_df.pwas$BPcum
@@ -162,10 +163,10 @@ dat <- rbind(dat[!m,],dat[m,])
 dat <- dat[dat$P>10^(-195),]
 
 set.seed(20221)
-tmp1 <- which( (dat$tissue %in% c("grey","black")) & (dat$P > p.twas) )
-tmp1 <- sample(tmp1, 50000)
-tmp2 <- which(!(dat$tissue %in% c("grey","black")))
-tmp3 <- which(dat$P <= p.twas)
+tmp1 <- which( (dat$tissue %in% c("grey","black")) & (dat$P > thres) )
+tmp1 <- sample(tmp1, 10000)
+tmp2 <- which(dat$P <= thres)
+tmp3 <- which(!(dat$tissue %in% c("grey","black")))
 dat <- dat[c(tmp1, tmp2, tmp3),]
   
 manhplot.twas <- ggplot(dat, aes(x = BPcum, y = -log10(P), 
@@ -348,7 +349,7 @@ manhplot.pwas <- ggplot(dat, aes(x = BPcum, y = -log10(P),
 
 
 dat <- dat_all[dat_all$tissue!="Plasma",]
-p.twas <- 2.12*10^(-7)
+p.twas <- 2.1*10^(-7)
 ylim <- abs(floor(log10(min(dat$P)))) + 2 
 
 m <- rep(F,nrow(dat))
@@ -397,10 +398,10 @@ labels_df.twas <- labels_df.twas[order(labels_df.twas$BPcum),]
 dat <- rbind(dat[!m,],dat[m,])
 
 set.seed(20222)
-tmp1 <- which( (dat$tissue %in% c("grey","black")) & (dat$P > p.twas) )
-tmp1 <- sample(tmp1, 50000)
-tmp2 <- which(!(dat$tissue %in% c("grey","black")))
-tmp3 <- which(dat$P <= p.twas)
+tmp1 <- which( (dat$tissue %in% c("grey","black")) & (dat$P > thres) )
+tmp1 <- sample(tmp1, 10000)
+tmp2 <- which(dat$P <= thres)
+tmp3 <- which(!(dat$tissue %in% c("grey","black")))
 dat <- dat[c(tmp1, tmp2, tmp3),]
 
 manhplot.twas <- ggplot(dat, aes(x = BPcum, y = -log10(P), 
